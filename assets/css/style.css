@@ -1,0 +1,62 @@
+body {
+  background: url('../images/background.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
+  opacity: 80%;
+}
+.mt-5
+{
+  color:black;
+  margin-bottom: 10%;
+  
+
+
+
+  }
+#render_area_div
+{
+  background-color: blue;
+  max-width: 70%;
+  margin-top: 10%;
+  margin-left: 15%;
+  max-height: : 100%;
+  height : 70vh;
+  }
+
+
+  .choices
+{
+  margin-top: 3%;
+  margin-left: 12%;
+
+
+
+  }
+
+
+#answer_choices_list
+{
+
+    margin-left: 33%;
+    margin-right: 45%;
+    border-style: solid;
+    background-color: white;
+
+}
+
+.list_elements
+{
+  color: black;
+  margin-bottom: 3%;
+  margin-left: 25%;
+}
+
+
+#stats_div
+{
+  color: black;
+  font-size: 80%;
+  
+}

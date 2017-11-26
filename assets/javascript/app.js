@@ -3,7 +3,7 @@ $(document).ready(function() {
 
  //var current_question;
  var current_question_obj_ref;
- var answered_flg;
+ var timeout_flg ='n';
  var correct_answer = 0;
  var incorrect_answer = 0;
  var question_counter = 0; 
@@ -73,43 +73,29 @@ var questions = {
 
 
 
-console.log("imhere1");
 
-//////////////////////////////////////////////////////////////////////////////////////////
-
-//function render_area() {
-//		var render_area_div = $("<div class='col-md-12  text-center' id='render_area_div'>");
-
-//		$("#renderarea").html(render_area_div);
-
-//}
-
-console.log("imhere2");
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
 function render_question(current_question) {
-        //time=30;
-       console.log("imhere3");
- 
+     
+ //if (question_counter<11) {
 	    current_question_obj_ref= 'question' + current_question;
 
-		//$("#renderarea").html("<div class='col-md-12  text-center question'>");
-		$(".question").html("<img src=" + questions[current_question_obj_ref].image + " width='400px'>");
-		console.log(questions[current_question_obj_ref].image);
+		$(".question").html("<img src=" + questions[current_question_obj_ref].image + " width='400px'  class='question_img'>");
 		$("#renderarea").append("<div class='text-center choices'>");
 	    $(".choices").html("<ol type='A' id='answer_choices_list'>");
 
-     console.log("imhere4");
 
 	    for (i = 0; i < questions[current_question_obj_ref].choices.length; i++) { 
 	         $("#answer_choices_list").append($("<li  class='list_elements text-left' id=question_list_element" + i + " >").html(questions[current_question_obj_ref].choices[i]));
 	       
 	      }
-	 //timeout();
-	 console.log("imhere5");
-
-    console.log(current_question_obj_ref);
+	 // } //else {
+	  	
+	  //	timeout ();
+	  //}
+	 
   } 
 
  
@@ -122,45 +108,33 @@ function evaluate_answer(evaluate_answer){
    
  if (evaluate_answer === questions[current_question_obj_ref].answer  ) {
 		 correct_answer++;
-
 		 question_counter++;
 
-		 console.log("evaluate_answer:"+evaluate_answer);
-		 console.log("correct");
-		 console.log("correct_answer:"+correct_answer);
-		 console.log("question_counter:"+question_counter);
+		
 		 $("#correct").html(correct_answer);
 
 		 render_question(question_counter);
-		// $('#timer').html(time);
-		 // $('#timer').html(time);
-		  //MyFunction.startInterval();
-
-		// time=30;
-		console.log("imhere6");
+		
 
 
 
 
- } else {
+ } 
+
+ else  {
  	     incorrect_answer++;
  	     question_counter++;
  	      console.log("evaluate_answer:"+evaluate_answer);
-		 console.log("correct");
-		 console.log("incorrect_answer:" + incorrect_answer);
-		 console.log("question_counter:" +question_counter);
+
 		 $("#incorrect").html(incorrect_answer);
 
  	     render_question(question_counter);
- 	    //$('#timer').html(time);
- 	    // MyFunction.startInterval();
+ 	     console.log("Hello1:" + questions[current_question_obj_ref].answer);
 
- 	     //time=30;
- 	     console.log("imhere7");
+ 	
 
 
-
- }
+ };
 
 }
 
@@ -168,22 +142,7 @@ function evaluate_answer(evaluate_answer){
 
 
 //////////////////////////////////////////////////////////////////////////////////////////
-// function timeout () {          
 
-
-//  setTimeout(function () {  
-  	 
-
-//     time=time-1; 
-//      $("#timer").html(time);                
-//      if (time>-1) {  
-//        console.log("imhere8");
-
-//        timeout();            
-//      }   
-
-//  }
-//  , 1500)
 
  function timeout () {          
 
@@ -191,75 +150,56 @@ function evaluate_answer(evaluate_answer){
 
 
 
-function rec_time() {  
-  	
-  	   //if (click==='n') {
-  	    $("#timer").html(time);  
-  	//}
-    
-    time--; 
-                   
-     if (time>-1) {  
-       console.log("imhere8"+time);
+			function rec_time() {  
+			  	
+			  	    $("#timer").html(time);  
+			    
+			    time--; 
 
-       timeout();            
-     }   
+			    console.log(question_counter);
 
-      if(time===-1 && click==='y') {
-      	clearTimeout(rec_time);
-     	time=init_time;
-     	click='n';
-     	///incorrect_answer++;
-    	//question_counter++;
-     	//render_question(question_counter);
-     	//$("#incorrect").html(incorrect_answer);
-     	console.log("hello1");
+			  if( question_counter===11 && timeout_flg!=='y') {
+			     	clearTimeout(rec_time);
+			     	timeout_flg ='y';
+                    console.log("im here");
 
- }
+			     	$("#timer").html(30); 
+			     	game_start();
+			     	
+			
+			 } else  {
+			                   
+			     if (time>-1) {  
 
-     if(time===-1 && click==='n') {
-     	clearTimeout(rec_time);
-     	
-     	time=init_time;
-     	incorrect_answer++;
-    	question_counter++;
-     	render_question(question_counter);
-     	$("#incorrect").html(incorrect_answer);
-     	timeout();
-        console.log("hello2");
- }
-    
-}
+			       timeout();            
+			     }   
+
+			      if(time===-1 && click==='y' ) {
+			      	clearTimeout(rec_time);
+			     	time=init_time;
+			     	click='n';
+
+
+			 }
+
+			     if(time===-1 && click==='n' ) {
+			     	clearTimeout(rec_time);
+			     	
+			     	time=init_time;
+			     	incorrect_answer++;
+			    	question_counter++;
+			     	$("#incorrect").html(incorrect_answer);
+			     	timeout();
+			
+			 }
+			
+			 }   
+			}
  
 
 }
  
-//function timeout () {
-   //var timeleft = 30;
-  //  var downloadTimer = setInterval(function(){
-    //time--;
-    //document.getElementById("timer").textContent = time;
-    //if(time <= 0) {incorrect_answer++; 
-    //	           $("#incorrect").html(incorrect_answer);
-     //   clearInterval(downloadTimer);
-       // question_counter++;
-        //timeout_flg='y';
 
-        //render_question(question_counter);
-
-    //}
-    //},1000);
-
-//}
-	//  var timer = setInterval(function() {
-
-	  //  var count = 30;
-	   // if  (count !== 0) {
-	     // $('#timer').html(count - 1);
-	    //} else {
-	      //clearInterval(timer);
-	    //}
-	  //}, 1000);
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -267,17 +207,14 @@ function rec_time() {
 
 function main() {
 
-	//render_area() ;
-	 //  MyFunction.startInterval();
 
-   console.log("imhere9");
 
 
        if (question_counter===0){
        	  time=init_time;
 
-           timeout();
-      // $('#timer').html(time);
+          timeout();
+        $('#timer').html(time);
       render_question(0);
 
 
@@ -291,27 +228,21 @@ function main() {
 
                              
 
-                             //time=30;
-                              
-                             //var clear= 
-                             //clearTimeout();
 
-                             //console.log(clear);
-
-                            
-                              click='y';
-                             time=0;
+                            click='y';
+                            time=0;
                              timeout();
+                              
 
-                            //timeout();
 				    	    if (questions[current_question_obj_ref].choices.indexOf(event.target.innerHTML) > -1)
 
 				    	    {
+
 				    	    var event_target= event.target;
 				    	    console.log("hello: "+ event.target.innerHTML);
                              answer = event.target.innerHTML;
 				    	     evaluate_answer(answer);
-				    	     console.log("imhere10");
+
 
 
 				    	 }
@@ -326,27 +257,50 @@ function main() {
 
 };
 
-//main();
+
+function game_start() {
+
+   var $play_button= $('<input/>').attr({ type: 'button', id:'play_button', class: "btn-primary btn-lg", value:'Play'});
+   
+
+   $("#renderarea").append($play_button);
 
 
+		  
+		  //question_counter = 0; 
+		  $(".question_img").remove();
+		  $(".choices").remove();
+		   $("#timer").hide();
+		  //$('#timer').html(0);
+		  
+		 // $("#timer").html(0);
 
 
-  // var $play_button= $('<input/>').attr({ type: 'button', id:'play_button', class: "btn-primary btn-lg", value:'Play'});
-  // $("#renderarea").append($play_button);
+  $("#play_button").on("click", function(event) {
+                             $play_button.remove();
+							 question_counter=0;
+							 correct_answer = 0;
+		  					 incorrect_answer = 0;
+		  					 $("#incorrect").html("0");
+		  					 $("#correct").html("0");
 
 
-  // $("#renderarea").on("click", function(event) {
+		  					 timeout_flg='n';
+		  					 $("#timer").show();
+		  					 
 
-							//question_counter=0;
-							main();
+							 main();
 
 
 
 				     
-				 //   });
+				   });
 
 
+};
 
+
+game_start();
 
 
 
